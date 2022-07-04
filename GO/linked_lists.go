@@ -87,7 +87,7 @@ func reverseList(l *LinkedList) {
 
 	first := l.head
 	second := l.head.next
-	fmt.Println("doing smth")
+
 	//swap next reference
 	for second != nil {
 		tmp := second.next
@@ -95,10 +95,8 @@ func reverseList(l *LinkedList) {
 		first, second = second, tmp
 	}
 	//swap head and tail
-	tmp := head
-	head = tail
-	tail = tmp
-	fmt.Println("doing smth")
+	head, tail = tail, head
+	tail.next = nil
 }
 
 func main() {
@@ -109,22 +107,5 @@ func main() {
 	appendList(1, list)
 	printNodes(list)
 	reverseList(list)
-	fmt.Println("head:  with value of: \t ", &list.head, list.head.value)
-	fmt.Println("tail:  with value of: \t ", &list.tail, list.tail.value)
-	fmt.Println(list.tail.next)
-	fmt.Println(list.head.next)
-
-	// printNodes(list)
-	// appendList(1, list)
-	// appendList(3, list)
-	// printNodes(list)
-	// prependList(-3, list)
-	// prependList(-2, list)
-	// prependList(-1, list)
-	// printNodes(list)
-	// insertNode(100, 0, list)
-	// printNodes(list)
-	// insertNode(90, 10, list)
-	// printNodes(list)
-	// insertNode(1000, 5, list)
+	printNodes(list)
 }
