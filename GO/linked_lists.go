@@ -82,9 +82,6 @@ func reverseList(l *LinkedList) {
 		return
 	}
 
-	head := l.head
-	tail := l.tail
-
 	first := l.head
 	second := l.head.next
 
@@ -95,8 +92,8 @@ func reverseList(l *LinkedList) {
 		first, second = second, tmp
 	}
 	//swap head and tail
-	head, tail = tail, head
-	tail.next = nil
+	l.head, l.tail = l.tail, l.head
+	l.tail.next = nil
 }
 
 func main() {
