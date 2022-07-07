@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-
 	slice := generateSlice(20)
 	fmt.Println("\n--- Unsorted --- \n\n", slice)
 	quicksort(slice)
@@ -29,7 +28,6 @@ func quicksort(a []int) []int {
 	if len(a) < 2 {
 		return a
 	}
-
 	left, right := 0, len(a)-1
 
 	pivot := rand.Int() % len(a)
