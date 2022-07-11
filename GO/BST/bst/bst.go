@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 type Node struct {
@@ -40,6 +42,34 @@ func (cn *Node) Insert(nn *Node) {
 		} else {
 			cn.right.Insert(nn)
 		}
+	}
+}
+
+func (b *MyBST) bfs_print() {
+	var stack []*Node
+	stack = append(stack, b.root)
+	for len(stack) > 0 {
+		fmt.Println(stack[0].value)
+		if stack[0].left != nil {
+			stack = append(stack, stack[0].left)
+		}
+		if stack[0].right != nil {
+			stack = append(stack, stack[0].right)
+		}
+		stack = stack[1:]
+	}
+}
+
+func dfs_print(n *Node) {
+	fmt.Println(n.value)
+	if n.left != nil {
+		dfs_print(n.left)
+	}
+	if n.right != nil {
+		dfs_print(n.right)
+	}
+	if n.left == nil && n.right == nil {
+		return
 	}
 }
 
@@ -92,12 +122,22 @@ func stringify(n *Node, level int) {
 	}
 }
 
-func main() {
+func generateRandomList(n int) *MyBST {
+	const max int = 100
 	bst := MyBST{}
-	bst.Insert(10)
-	bst.Insert(9)
-	bst.Insert(5)
-	bst.Insert(20)
-	// bst.String()
-	fmt.Println(bst.Lookup(10))
+
+	for n > 0 {
+		rand.Seed(time.Now().UnixNano())
+		val := rand.Intn(max)
+		bst.Insert(val)
+		n--
+	}
+	return &bst
+}
+
+func main() {
+	bst := generateRandomList(10)
+	bst.String()
+	// bst.bfs_print()
+	dfs_print(bst.root)
 }
