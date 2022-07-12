@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -60,6 +61,27 @@ func (b *MyBST) bfs_print() {
 	}
 }
 
+func isValidBST(tree *Node) bool {
+	return validateBst(tree, math.MinInt64, math.MaxInt64)
+}
+
+func validateBst(tree *Node, minValue, maxValue int) bool {
+	if tree == nil {
+		return true
+	}
+	if tree.value <= minValue || tree.value >= maxValue {
+		return false
+	}
+	if tree.left != nil && !validateBst(tree.left, minValue, tree.value) {
+		return false
+	}
+	if tree.right != nil && !validateBst(tree.right, tree.value, maxValue) {
+		return false
+	}
+
+	return true
+}
+
 func dfs_print(n *Node) {
 	fmt.Println(n.value)
 	if n.left != nil {
@@ -73,6 +95,48 @@ func dfs_print(n *Node) {
 	}
 }
 
+func dfs_in_order_recurs(n *Node) {
+	if n.left == nil && n.right == nil {
+		fmt.Println(n.value)
+		return
+	} else {
+		if n.left != nil {
+			dfs_in_order_recurs(n.left)
+		}
+		fmt.Println(n.value)
+		if n.right != nil {
+			dfs_in_order_recurs(n.right)
+		}
+		return
+	}
+
+}
+
+func dfs_pre_order_recurs(n *Node) {
+	if n != nil {
+		fmt.Println(n.value)
+		if n.left != nil {
+			dfs_pre_order_recurs(n.left)
+		}
+		if n.right != nil {
+			dfs_pre_order_recurs(n.right)
+		}
+	}
+}
+func dfs_post_order_recurs(n *Node) {
+	if n.left == nil && n.right == nil {
+		fmt.Println(n.value)
+	} else {
+		if n.left != nil {
+			dfs_post_order_recurs(n.left)
+		}
+		if n.right != nil {
+			dfs_post_order_recurs(n.right)
+		}
+		fmt.Println(n.value)
+	}
+
+}
 func (n *Node) Lookup(val int) bool {
 	if n.value == val {
 		return true
@@ -136,8 +200,12 @@ func generateRandomList(n int) *MyBST {
 }
 
 func main() {
-	bst := generateRandomList(10)
+	bst := generateRandomList(9)
 	bst.String()
 	// bst.bfs_print()
-	dfs_print(bst.root)
+	// dfs_print(bst.root)
+	// dfs_in_order_recurs(bst.root)
+	// dfs_pre_order_recurs(bst.root)
+	dfs_post_order_recurs(bst.root)
+	fmt.Println(isValidBST(bst.root))
 }
