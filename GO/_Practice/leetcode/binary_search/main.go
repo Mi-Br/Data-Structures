@@ -47,12 +47,13 @@ func search_iterative(nums []int, target int) int {
 	h := len(nums) - 1
 
 	for l < h {
-		m := l + int((h-l)/2)
+		m := l + int((h-l+1)/2) // should always use upper mid, otherwise it will get stuck with 2 elements. mid will keep reseting to l and l will always be < h
+		fmt.Println(l, m, h)
 		if nums[m] == target {
 			return m
 		}
 		if target < nums[m] {
-			h = m
+			h = m - 1
 		}
 		if target > nums[m] {
 			l = m
@@ -62,6 +63,6 @@ func search_iterative(nums []int, target int) int {
 }
 
 func main() {
-	fmt.Println(search_recurs([]int{-1, 3, 4, 5100}, 4))
-	fmt.Println(search_iterative([]int{-1, 3, 4, 5100}, 4))
+	// fmt.Println(search_recurs([]int{-1, 0, 3, 5, 9, 12}, 2))
+	fmt.Println(search_iterative([]int{-1, 0, 3, 5, 9, 12}, 2))
 }
