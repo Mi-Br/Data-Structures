@@ -38,6 +38,7 @@ func mergesort(arr []int) []int {
 		}
 
 	}
+	//one of sides has remaining elements which need to be added to the output array
 	if len(left) > 0 {
 		out = append(out, left...)
 	}
